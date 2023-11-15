@@ -25,8 +25,7 @@ class GetProbabilities(object):  # I need to modify the input format to cdr3aa+v
         self.df_w_sign_test = pm.look_for_tcr_index(self.data_test, self.sign_tcr)
         if len(self.df_w_sign_test)==0:
             print('No HLA-related TCRs have been found in your repertoire')
-            print('Exiting...')
-            break
+            self.hla_prob = 'N/A'
         else:
             if len(self.chain)==2:
                 self.OMs_train, self.z_train = pm.get_occurrence_matrix(self.df_w_sign_train,self.n_pat_train,self.dic_p_train,grouped=True)
