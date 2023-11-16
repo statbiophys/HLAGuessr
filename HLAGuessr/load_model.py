@@ -38,7 +38,7 @@ class PreprocessedModel():
         
         big_df = pd.DataFrame()
         for c in self.chain:
-            f = self.main_directory+'/Training_data/{}_cdr3aa_shared_at_least_3.txt.gz'.format(c)
+            f = self.main_directory+'/Training_data/{}_cdr3aa_shared_at_least_3.txt'.format(c)
             df = pd.read_csv(f, delimiter='\t')
             df['chain'] = c
             big_df = pd.concat([big_df, df], ignore_index=True)
@@ -141,8 +141,7 @@ class PreprocessedModel():
             for c in str(x).split(', '):
                 if c in dic:
                     if 'beta' in self.chain:
-                        i = dic.get(str(c)) # ALTERNATIVE: change the HLA file with three
-                                                     # columns for patients: alpha, beta, alpha+beta
+                        i = dic.get(str(c)) 
                     else:
                         if '_Em' not in c:
                             i = dic.get(str(c))
