@@ -1,0 +1,2 @@
+recursive-include HLAGuessr/Training_data/ *
+recursive-include HLAGuessr/Example_validation_data/ *

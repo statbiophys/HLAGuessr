@@ -102,7 +102,7 @@ def main():
         hla_0 = options.hla.split(',')
         for h in hla_0:
             if h not in list(pm.df_param['HLA']):
-                print('Not information available for HLA '+h)
+                print('No available information for HLA '+h)
             else:
                 hla_set.append(h)
 
