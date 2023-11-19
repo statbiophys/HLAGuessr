@@ -62,7 +62,7 @@ def main():
         chain.append('alpha')
         
         if not os.path.isfile(options.alpha_infile):
-            print('Cannot find alpha input file: ' + alpha_infile)
+            print('Cannot find alpha input file: ' + infile_name)
             print('Exiting...')
             return(-1)
         
@@ -71,7 +71,7 @@ def main():
         chain.append('beta')
         
         if not os.path.isfile(options.beta_infile):
-            print('Cannot find beta input file: ' + beta_infile)
+            print('Cannot find beta input file: ' + infile_name)
             print('Exiting...')
             return(-1)
     
@@ -95,6 +95,7 @@ def main():
         
 
     process = Processing(chain,options.alpha_infile,options.beta_infile,delimiter)
+    patients = list(set(process.data_test['Patient']))
     
     hla_set = []
     
@@ -117,16 +118,21 @@ def main():
             return(-1)
          
     else:
+        
+        for p in patients:
+            
+            print('Individual ' +p+ ':')
 
-        for hla_target in hla_set:
+            for hla_target in hla_set:
+                
+                data_p = process.data_test.loc[process.data_test['Patient']==p,:]
+                ev = GetProbabilities(hla_target,chain,data_test=data_p)
+                params = ev.classifier_params(pm.df_param,hla_target)
+                df = mt.print_params(hla_target,ev.hla_prob,params)
+                df_final_params = pd.concat([df,df_final_params],ignore_index=True)
 
-            ev = GetProbabilities(hla_target,chain,data_test=process.data_test)
-            params = ev.classifier_params(pm.df_param,hla_target)
-            df = mt.print_params(hla_target,ev.hla_prob,params)
-            df_final_params = pd.concat([df,df_final_params],ignore_index=True)
-
-        if options.outfile_name is not None:
-            outfile_name = options.outfile_name
-            df_final_params.to_csv(outfile_name,sep='\t',index=False)
+            if options.outfile_name is not None:
+                outfile_name = options.outfile_name
+                df_final_params.to_csv(outfile_name,sep='\t',index=False)
 
 if __name__ == '__main__': main()
