@@ -62,7 +62,7 @@ class GetProbabilities(object):  # I need to modify the input format to cdr3aa+v
     def get_hla_probabilities(self,X_train_scaled,y_train,X_test,hla_target,df_param,solver='lbfgs',penalty='l2',l1_ratio=None,class_weight=None,c=None):
         
         if c is None:
-            c = np.float(df_param[df_param['HLA']==hla_target]['Regularization'])
+            c = float(df_param[df_param['HLA']==hla_target]['Regularization'])
         
         model_lr = LogisticRegression(solver=solver,penalty=penalty,C=c)
         model_lr.fit(X_train_scaled, y_train)
@@ -71,9 +71,9 @@ class GetProbabilities(object):  # I need to modify the input format to cdr3aa+v
     
     def classifier_params(self,df_param,hla_target):
         df1 = df_param[df_param['HLA']==hla_target]
-        auc = np.float(df1['AUC'])
-        a = np.float(df1['accuracy'])
-        p = np.float(df1['precision'])
-        s1 = np.float(df1['sensitivity'])
-        s2 = np.float(df1['specificity'])
+        auc = float(df1['AUC'])
+        a = float(df1['accuracy'])
+        p = float(df1['precision'])
+        s1 = float(df1['sensitivity'])
+        s2 = float(df1['specificity'])
         return([auc,a,p,s1,s2])

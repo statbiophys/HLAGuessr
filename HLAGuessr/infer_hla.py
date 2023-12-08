@@ -128,7 +128,7 @@ def main():
                 data_p = process.data_test.loc[process.data_test['Patient']==p,:]
                 ev = GetProbabilities(hla_target,chain,data_test=data_p)
                 params = ev.classifier_params(pm.df_param,hla_target)
-                df = mt.print_params(hla_target,ev.hla_prob,params)
+                df = mt.print_params(hla_target,ev.hla_prob,params,p)
                 df_final_params = pd.concat([df,df_final_params],ignore_index=True)
 
             if options.outfile_name is not None:
