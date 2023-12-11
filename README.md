@@ -21,7 +21,7 @@ HLAGuessr is also available on [GitHub](https://github.com/mariaruizortega94/HLA
 │   setup.py
 │   MANIFEST.in  
 │
-└───HLAGuessr/
+└─── HLAGuessr/
     │   __init__.py
     │   processing.py
     │   evaluate_data.py
@@ -29,7 +29,7 @@ HLAGuessr is also available on [GitHub](https://github.com/mariaruizortega94/HLA
     │   load_model.py
     │   model_tools.py
     │
-    └───Training data/
+    └─── Training data/
         │    alpha_cdr3aa_shared_at_least_3.txt 
         │    beta_cdr3aa_shared_at_least_3.txt
         │    classifier_params_alpha+beta.tsv
@@ -39,12 +39,12 @@ HLAGuessr is also available on [GitHub](https://github.com/mariaruizortega94/HLA
         │    inference_all_data_TCRs_sign_HLA.tsv
         │
         
-    └───Example_validations_data/
+    └─── Example_validations_data/
         │    alpha_example.tsv 
         │    beta_example.tsv
 ```
 
-## Command line console scripts and Examples
+## Command line console scripts
 
 There is one command line console scripts (the scripts can still be called as executables if HLAGuessr is not installed):
 1. HLAGuessr-infer_hla
@@ -52,10 +52,22 @@ There is one command line console scripts (the scripts can still be called as ex
 
 You can execute it with the -h or --help flags to get the options.
 
-### Quick Demo
+### General commands summary
+
+| Selected Options                               | Description                                      |
+|------------------------------------------------|--------------------------------------------------|
+|   **-h**, **--help**                           |   show full Options list and exit                          |
+|   **-a** PATH/TO/ALPHA_FILE                    |   read input alpha repertoire file containing CDR3α sequences from PATH/TO/ALPHA_FILE |
+|   **-b** PATH/TO/BETA_FILE                     |   read input beta repertoire file containing CDR3β sequences from PATH/TO/BETA_FILE |
+|   **-o** PATH/TO/FILE                          |   write probabilities and report of the classifier parameters in PATH/TO/FILE |
+|   **--hla** HLA ALLELE (or list of alleles)    |   specify HLA allele (or list of them separated for a comma) to compute probabilities. If not allele is specified, a default list of available alleles will be entirely explored.  |
+|  **-d** DELIMITER                              |   declare infile delimiter. Default is tab for .tsv input files, comma for .csv files, and any whitespace for all others. Choices: 'tab', 'space', ',', ';', ':'    |
+
+
+## Quick Demo
 After installing HLAGuessr, we offer a quick demonstration of the console scripts using two example files that can be found in Example_validation_data folder, alpha_example and beta_example. 
 ```
-1. HLAGuessr-infer_hla -a ~/HLAGuessr/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/HLAGuessr/HLAGuessr/Example_validation_data/beta_example.tsv --hla A*02:01 -d tab
+1. HLAGuessr-infer_hla -a ~/HLAGuessr/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/HLAGuessr/HLAGuessr/Example_validation_data/beta_example.tsv --hla "A*02:01" -d tab
 
 100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 1842.48it/s]
 100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 2011.12it/s]
@@ -67,6 +79,11 @@ After installing HLAGuessr, we offer a quick demonstration of the console script
 100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 1955.84it/s]
 8it [00:00, 330.90it/s]
 A*02:01  -> Probability: 1.0	 AUC: 0.9879227053140096	 Accuracy: 0.7073170731707317	 Precision: 0.6	 Sensitivity: 1.0	 Specificity: 0.4782608695652174
+
+2. HLAGuessr-infer_hla -a ~/HLAGuessr/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/HLAGuessr/HLAGuessr/Example_validation_data/beta_example.tsv --hla "B*02:01" -d tab
+No available information for HLA B*02:01
+No available information for the HLA alleles provided
+Exiting...
 ```
 
 
