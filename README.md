@@ -54,7 +54,8 @@ You can execute it with the -h or --help flags to get the options.
 
 ### Quick Demo
 After installing HLAGuessr, we offer a quick demonstration of the console scripts using two example files that can be found in Example_validation_data folder, alpha_example and beta_example. 
-1. ```HLAGuessr-infer_hla -a ~/HLAGuessr/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/HLAGuessr/HLAGuessr/Example_validation_data/beta_example.tsv --hla A*02:01 -d tab
+```
+1. HLAGuessr-infer_hla -a ~/HLAGuessr/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/HLAGuessr/HLAGuessr/Example_validation_data/beta_example.tsv --hla A*02:01 -d tab
 
 100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 1842.48it/s]
 100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 2011.12it/s]
@@ -65,7 +66,8 @@ After installing HLAGuessr, we offer a quick demonstration of the console script
 100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 1780.93it/s]
 100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 1955.84it/s]
 8it [00:00, 330.90it/s]
-A*02:01  -> Probability: 1.0	 AUC: 0.9879227053140096	 Accuracy: 0.7073170731707317	 Precision: 0.6	 Sensitivity: 1.0	 Specificity: 0.4782608695652174```
+A*02:01  -> Probability: 1.0	 AUC: 0.9879227053140096	 Accuracy: 0.7073170731707317	 Precision: 0.6	 Sensitivity: 1.0	 Specificity: 0.4782608695652174
+```
 
 
 ## Contact
