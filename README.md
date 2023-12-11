@@ -9,7 +9,7 @@ HLAGuessr is available on PyPI and can be downloaded and installed through pip:
 
  ```pip install HLAGuessr==0.0.2```.
 
-HLAGuessr is also available on [GitHub](https://github.com/mariaruizortega94/HLAGuessr). The command line entry points can be installed by using the setup.py script:
+HLAGuessr is also available on [GitHub](https://github.com/statbiophys/HLAGuessr). The command line entry points can be installed by using the setup.py script:
 
  ```$python setup.py install .```.
 
@@ -44,7 +44,7 @@ HLAGuessr is also available on [GitHub](https://github.com/mariaruizortega94/HLA
         │    beta_example.tsv
 ```
 
-## Command line console scripts
+## Command line console script
 
 There is one command line console scripts (the scripts can still be called as executables if HLAGuessr is not installed):
 1. HLAGuessr-infer_hla
@@ -57,11 +57,16 @@ You can execute it with the -h or --help flags to get the options.
 | Selected Options                               | Description                                      |
 |------------------------------------------------|--------------------------------------------------|
 |   **-h**, **--help**                           |   show full Options list and exit                          |
-|   **-a** PATH/TO/ALPHA_FILE                    |   read input alpha repertoire file containing CDR3α sequences from PATH/TO/ALPHA_FILE |
-|   **-b** PATH/TO/BETA_FILE                     |   read input beta repertoire file containing CDR3β sequences from PATH/TO/BETA_FILE |
-|   **-o** PATH/TO/FILE                          |   write probabilities and report of the classifier parameters in PATH/TO/FILE |
+|   **-a**, **--alpha_infile** PATH/TO/ALPHA_FILE|   read input alpha repertoire file containing CDR3α sequences from PATH/TO/ALPHA_FILE |
+|   **-b**, **--beta_infile** PATH/TO/BETA_FILE  |   read input beta repertoire file containing CDR3β sequences from PATH/TO/BETA_FILE |
+|   **-o**, **--outfile** PATH/TO/FILE           |   write probabilities and report of the classifier parameters in PATH/TO/FILE |
 |   **--hla** HLA ALLELE (or list of alleles)    |   specify HLA allele (or list of them separated for a comma) to compute probabilities. If not allele is specified, a default list of available alleles will be entirely explored.  |
 |  **-d** DELIMITER                              |   declare infile delimiter. Default is tab for .tsv input files, comma for .csv files, and any whitespace for all others. Choices: 'tab', 'space', ',', ';', ':'    |
+
+### Notes about input files format
+
+The script has only minimal file parsing built in, so reading in sequences from a file requires the file to be structured in a particular way. Data must be presented with delimiter spaced values (i.e. the data is organized in columns separated by delimiter like a tab for .tsv or a comma for .csv file). The first column, called *cdr3aa*, must contain the **CDR3 region** in amino acid format, from the conserved cysteine C (INCLUSIVE) in the V region to the conserved F (INCLUSIVE) in the J; the second column, called *v_family*, must contain the **V gene family** in the format TR(A/B)VX; the third column, named *Patient*, must contain some **string identifier for each individual** included in the repertoire data. An example of how it should be presented:
+
 
 
 ## Quick Demo
