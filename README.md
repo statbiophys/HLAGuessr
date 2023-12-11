@@ -14,7 +14,7 @@ HLAGuessr is also available on [GitHub](https://github.com/mariaruizortega94/HLA
  ```$python setup.py install .```.
 
  Directory architecture:
-
+```
  HLAGuessr/
 │   README.md
 │   LICENSE
@@ -42,7 +42,7 @@ HLAGuessr is also available on [GitHub](https://github.com/mariaruizortega94/HLA
     └───Example_validations_data/
         │    alpha_example.tsv 
         │    beta_example.tsv
-
+```
 
 ## Command line console scripts and Examples
 
