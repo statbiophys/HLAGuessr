@@ -66,8 +66,13 @@ You can execute it with the -h or --help flags to get the options.
 ### Notes about input files format
 
 The script has only minimal file parsing built in, so reading in sequences from a file requires the file to be structured in a particular way. Data must be presented with delimiter spaced values (i.e. the data is organized in columns separated by delimiter like a tab for .tsv or a comma for .csv file). The first column, called *cdr3aa*, must contain the **CDR3 region** in amino acid format, from the conserved cysteine C (INCLUSIVE) in the V region to the conserved F (INCLUSIVE) in the J; the second column, called *v_family*, must contain the **V gene family** in the format TR(A/B)VX; the third column, named *Patient*, must contain some **string identifier for each individual** included in the repertoire data. An example of how it should be presented:
-
-
+```
+**cdr3aa**   **v_family**	  **Patient**
+CAAAADAGGTSYGKLTF  	TRAV23  	B1
+CAAAAFGNEKLTF  	TRAV29  	B1
+CAAAAGANNLFF  	TRAV23  	B1
+CAAAAGGTSYGKLTF  	TRAV29  	B1
+```
 
 ## Quick Demo
 After installing HLAGuessr, we offer a quick demonstration of the console scripts using two example files that can be found in Example_validation_data folder, alpha_example and beta_example. 
