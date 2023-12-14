@@ -95,7 +95,7 @@ No available information for HLA B*02:01
 No available information for the HLA alleles provided
 Exiting...
 
-3. HLAGuessr-infer_hla -a ~/Scripts/HLA_Guessr_package/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/Scripts/HLA_Guessr_package/HLAGuessr/Example_validation_data/beta_example.tsv -h A*02:01,B*07:02 -d tab
+3. HLAGuessr-infer_hla -a ~/Scripts/HLA_Guessr_package/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/Scripts/HLA_Guessr_package/HLAGuessr/Example_validation_data/beta_example.tsv --hla "A*02:01,B*07:02" -d tab
 Individual 17_B:
 100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 2141.29it/s]
 100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 2096.76it/s]
