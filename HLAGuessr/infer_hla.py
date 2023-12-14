@@ -41,15 +41,16 @@ def main():
     parser.add_option('-a', '--alpha_infile', dest = 'alpha_infile',metavar='PATH/TO/FILE', help='read in CDR3 alpha sequences and V gene families from PATH/TO/FILE')
     parser.add_option('-b', '--beta_infile', dest = 'beta_infile',metavar='PATH/TO/FILE', help='read in CDR3 alpha sequences and V gene families from PATH/TO/FILE')
     parser.add_option('-o', '--outfile', dest = 'outfile_name', metavar='PATH/TO/FILE', help='write HLA probabilities to PATH/TO/FILE')
-    #parser.add_option('--seq_in', '--seq_index', type='int', metavar='INDEX', dest='seq_in_index', default = 0, help='specifies sequences to be read in are in column INDEX. Default is index 0 (the first column).')
-    #parser.add_option('-m', '--max_number_of_seqs', type='int',metavar='N', dest='max_number_of_seqs', help='evaluate for at most N sequences.')
-    #parser.add_option('--lines_to_skip', type='int',metavar='N', dest='lines_to_skip', default = 0, help='skip the first N lines of the file. Default is 0.')
     
     #delimeters
     parser.add_option('-d', '--delimiter', type='choice', dest='delimiter',  choices=['tab', 'space', ',', ';', ':'], help="declare infile delimiter. Default is tab for .tsv input files, comma for .csv files, and any whitespace for all others. Choices: 'tab', 'space', ',', ';', ':'")
     
     # HLA alleles
-    parser.add_option('-h', '--hla', dest='hla', default=False, metavar='X*aa:bb,Y*cc:dd,...', help="specify the HLA allele (or HLA alleles, separated by ,) which probabilities want to be inferred.")
+    parser.add_option('--hla', dest='hla', default=False, metavar=' "X*aa:bb,Y*cc:dd,..." ', help="specify with quotation marks the HLA allele (or HLA alleles, separated by ,) whose probabilities want to be inferred. If nothing is specified, a default list of alleles will be used.")
+    
+        #parser.add_option('--seq_in', '--seq_index', type='int', metavar='INDEX', dest='seq_in_index', default = 0, help='specifies sequences to be read in are in column INDEX. Default is index 0 (the first column).')
+    #parser.add_option('-m', '--max_number_of_seqs', type='int',metavar='N', dest='max_number_of_seqs', help='evaluate for at most N sequences.')
+    #parser.add_option('--lines_to_skip', type='int',metavar='N', dest='lines_to_skip', default = 0, help='skip the first N lines of the file. Default is 0.')
 
     (options, args) = parser.parse_args()
 
@@ -99,7 +100,7 @@ def main():
     
     hla_set = []
     
-    if options.hla is not None:
+    if options.hla==True:
         hla_0 = options.hla.split(',')
         for h in hla_0:
             if h not in list(pm.df_param['HLA']):
@@ -134,5 +135,6 @@ def main():
             if options.outfile_name is not None:
                 outfile_name = options.outfile_name
                 df_final_params.to_csv(outfile_name,sep='\t',index=False)
+                print('Output '+ outfile_name + ' succesfully generated.')
 
 if __name__ == '__main__': main()
