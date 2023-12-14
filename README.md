@@ -68,10 +68,10 @@ You can execute it with the -h or --help flags to get the options.
 The script has only minimal file parsing built in, so reading in sequences from a file requires the file to be structured in a particular way. Data must be presented with delimiter spaced values (i.e. the data is organized in columns separated by delimiter like a tab for .tsv or a comma for .csv file). The first column, called *cdr3aa*, must contain the **CDR3 region** in amino acid format, from the conserved cysteine C (INCLUSIVE) in the V region to the conserved F (INCLUSIVE) in the J; the second column, called *v_family*, must contain the **V gene family** in the format TR(A/B)VX; the third column, named *Patient*, must contain some **string identifier for each individual** included in the repertoire data. An example of how it should be presented:
 ```
     cdr3aa         v_family	   Patient
-CAAAADAGGTSYGKLTF  	TRAV23  	    B1
-CAAAAFGNEKLTF  	    TRAV29  	    B1
-CAAAAGANNLFF  	     TRAV23  	    B1
-CAAAAGGTSYGKLTF  	  TRAV29  	    B1
+CAAAADAGGTSYGKLTF   TRAV23  	    B1
+CAAAAFGNEKLTF       TRAV29  	    B1
+CAAAAGANNLFF        TRAV23  	    B1
+CAAAAGGTSYGKLTF     TRAV29  	    B1
 ```
 
 ## Quick Demo
@@ -94,6 +94,29 @@ A*02:01  -> Probability: 1.0	 AUC: 0.9879227053140096	 Accuracy: 0.7073170731707
 No available information for HLA B*02:01
 No available information for the HLA alleles provided
 Exiting...
+
+3. HLAGuessr-infer_hla -a ~/Scripts/HLA_Guessr_package/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/Scripts/HLA_Guessr_package/HLAGuessr/Example_validation_data/beta_example.tsv -h A*02:01,B*07:02 -d tab
+Individual 17_B:
+100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 2141.29it/s]
+100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 2096.76it/s]
+100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 1864.32it/s]
+100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 1885.72it/s]
+100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 1767.05it/s]
+100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 1716.78it/s]
+100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 1910.52it/s]
+100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 1881.49it/s]
+8it [00:00, 357.27it/s]
+A*02:01  -> Probability: 1.0	 AUC: 0.9879227053140096	 Accuracy: 0.7073170731707317	 Precision: 0.6	 Sensitivity: 1.0	 Specificity: 0.4782608695652174
+100%|█████████████████████████████████████████| 28/28 [00:00<00:00, 2317.84it/s]
+100%|█████████████████████████████████████████| 28/28 [00:00<00:00, 2303.79it/s]
+100%|█████████████████████████████████████████| 28/28 [00:00<00:00, 2086.16it/s]
+100%|█████████████████████████████████████████| 28/28 [00:00<00:00, 2076.94it/s]
+100%|█████████████████████████████████████████| 28/28 [00:00<00:00, 2227.29it/s]
+100%|█████████████████████████████████████████| 28/28 [00:00<00:00, 2659.19it/s]
+100%|█████████████████████████████████████████| 28/28 [00:00<00:00, 2137.85it/s]
+100%|█████████████████████████████████████████| 27/27 [00:00<00:00, 2323.19it/s]
+8it [00:00, 213.73it/s]
+B*07:02  -> Probability: 1.0	 AUC: 1.0	 Accuracy: 0.7804878048780488	 Precision: 0.5263157894736842	 Sensitivity: 1.0	 Specificity: 0.7096774193548387
 ```
 
 
