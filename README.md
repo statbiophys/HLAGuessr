@@ -4,10 +4,12 @@ HLAGuessr is a python 3.6 software developed to infer HLA haplotypes from repert
 ## Version
 Latest released version: 0.1.4
 
+
 ## Installation
 HLAGuessr is available on PyPI and can be downloaded and installed through pip:
 
- ```pip install HLAGuessr==0.1.4```.
+
+ ```pip install HLAGuessr==0.1.4```
 
 HLAGuessr is also available on [GitHub](https://github.com/statbiophys/HLAGuessr). The command line entry points can be installed by using the setup.py script:
 
