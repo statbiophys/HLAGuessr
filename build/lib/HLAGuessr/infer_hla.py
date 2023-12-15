@@ -100,7 +100,9 @@ def main():
     
     hla_set = []
     
-    if options.hla==True:
+    print(options.hla)
+    
+    if options.hla!=False:
         hla_0 = options.hla.split(',')
         for h in hla_0:
             if h not in list(pm.df_param['HLA']):
