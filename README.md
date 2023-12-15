@@ -2,7 +2,7 @@
 HLAGuessr is a python 3.6 software developed to infer HLA haplotypes from repertoire datasets, using alpha, beta or both chain CDR3 amino acid sequences. The inference is done via a linear model that assigns different weights to a list of TCRs that tend to significantly co-occur (according to Fisher exact test) among people with a given HLA phenotypes. Then, by measuring the presence (or absence) of those TCRs and statistically assessing their concordance with phenotypes of interest, we show that different HLA alleles can be predicted with high accuracy solely on the basis of the TCRβ (and, in some cases,the TCRα)repertoire data generated from peripheral blood.This method was first used in Emerson et al. (2017) to study the relation between CMV serostatus and HLA phenotypes from public TCRs. HLAGuessr takes as input a list of TCR CDR3 amino acid sequences and V gene families and optionally a list with the HLA alleles which probabilities will be computed. If no list is specified, a default list of available HLA will be used instead. The output is a list of probabilities of HLA matching followed by the parameters (AUC, accuracy, precision, sensitivity and specificity) measured over an external validation dataset that can be used as guidance for the certitude of the computation.
 
 ## Version
-Latest released version: 0.1.4
+Latest released version: 0.1.5
 
 
 ## Installation
@@ -75,6 +75,10 @@ CAAAAFGNEKLTF       TRAV29  	    B1
 CAAAAGANNLFF        TRAV23  	    B1
 CAAAAGGTSYGKLTF     TRAV29  	    B1
 ```
+## Output
+
+As a result for the computation, for each patient and HLA allele, the classifier will print a probability of the allele to be present in the person and a summary of the parameters that caracterized the classifier performance (AUC, accuracy, precision sensitivity and specificity) when it was applied to an external validation dataset. By displying these metrics, the user can weigh the validity of the prediction.
+If a file is specified to write to (using -o, see Options), the generated predictions are written to the file, otherwise they are printed to stdout.
 
 ## Quick Demo
 After installing HLAGuessr, we offer a quick demonstration of the console scripts using two example files that can be found in Example_validation_data folder, alpha_example and beta_example. 
