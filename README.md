@@ -77,7 +77,7 @@ CAAAAGGTSYGKLTF     TRAV29  	    B1
 ```
 ## Output
 
-As a result for the computation, for each patient and HLA allele, the classifier will print a probability of the allele to be present in the person and a summary of the parameters that caracterized the classifier performance (AUC, accuracy, precision sensitivity and specificity) when it was applied to an external validation dataset. By displying these metrics, the user can weigh the validity of the prediction.
+As a result for the computation, for each patient and HLA allele, the classifier will print a probability of the allele to be present in the person and a summary of the parameters that caracterized the classifier performance (AUC, accuracy, precision sensitivity and specificity) when it was applied to an external validation dataset. By displying these metrics, the user can weigh the validity of the prediction. In order to reduce the number of false positives, only those alleles with probability higher than 0.9 will be consider positives for the analysed repertoire.
 If a file is specified to write to (using -o, see Options), the generated predictions are written to the file, otherwise they are printed to stdout.
 
 ## Quick Demo
