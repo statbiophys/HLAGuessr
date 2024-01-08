@@ -10,15 +10,16 @@ import os
 
 class PreprocessedModel():
     
-    def __init__(self,chain,sig_threshold=0.05, seq_threshold=None, list_file=None, hla_file=None, files_path=None):
+    def __init__(self,chain,sig_threshold=0.05, seq_threshold=None, list_file=None, hla_file=None, files_path=None,weights_file=None):
         
         self.main_directory = os.path.dirname(__file__)
         
-        if any([x is not None for x in [list_file, hla_file, files_path]]):
-            self.list_file, self.hla_file, self.files_path = list_file, hla_file, files_path
+        if any([x is not None for x in [list_file, hla_file, files_path,weights_file]]):
+            self.list_file, self.hla_file, self.files_path, self.weights_file = list_file, hla_file, files_path, weights_file
         else:
             self.list_file = self.main_directory+'/Training_data/inference_all_data_TCRs_sign_HLA.tsv'
             self.hla_file = self.main_directory+'/Training_data/HLA_grouped_patients.tsv'
+            self.weights_file = self.main_directory+'/Training_data/HLA_frequency_for_validation.tsv'
 
         self.chain = chain
         
@@ -67,12 +68,12 @@ class PreprocessedModel():
         
         if len(self.chain)==1:
             df = pd.read_csv(self.list_file, delimiter='\t')
-            df = df.loc[((df['p_BH']<self.t)&(df['chain']==self.chain[0])), ['TCR+V','p_BH','HLA']]
+            df = df.loc[((df['p_BH']<self.t)&(df['chain']==self.chain[0])&(df['Attribute']=='Overrepresented')), ['TCR+V','p_BH','HLA']]
         if len(self.chain)==2:
             df = pd.read_csv(self.list_file, delimiter='\t')
-            df_alpha = df.loc[((df['p_BH']<self.t)&(df['chain']==self.chain[0])), ['TCR+V','p_BH','HLA']]
+            df_alpha = df.loc[((df['p_BH']<self.t)&(df['chain']==self.chain[0])&(df['Attribute']=='Overrepresented')), ['TCR+V','p_BH','HLA']]
             df = pd.read_csv(self.list_file, delimiter='\t')
-            df_beta = df.loc[((df['p_BH']<self.t)&(df['chain']==self.chain[1])), ['TCR+V','p_BH','HLA']]
+            df_beta = df.loc[((df['p_BH']<self.t)&(df['chain']==self.chain[1])&(df['Attribute']=='Overrepresented')), ['TCR+V','p_BH','HLA']]
             if self.n_seq:
                 df_alpha = df_alpha[:self.n_seq_train]
                 df_beta = df_beta[:self.n_seq_train]
@@ -90,12 +91,12 @@ class PreprocessedModel():
         df1.reset_index(drop=True,inplace=True)
         return(df1)
 
-    def get_occurrence_matrix(self,data,n_patients,dic,grouped):
+    def get_occurrence_matrix_train(self,data,n_patients,dic,grouped,ref_OMs=None,matrix_index=None):
            
         OMs = []
         data.drop_duplicates('cdr3+v_family',keep='first',inplace=True)
         data.sort_values('cdr3+v_family',inplace=True)
-        for c in self.chain:
+        for i,c in enumerate(self.chain):
             df1 = data[(data['chain']==c)].reset_index()
             if grouped==True:
                 m = int(n_patients) 
@@ -107,23 +108,27 @@ class PreprocessedModel():
                             j = dic.get(str(y))
                             OM[int(j)][i] = 1
                 OMs.append(OM)
-            else:
-                files = df1.groupby('cdr3+v_family')['Patient'].apply(list)
-                m = int(n_patients) 
-                n = int(len(df1))
-                OM = np.zeros([m,n])
-                for i,file in enumerate(files):
-                    for f in file:
-                        if f in dic:
-                            j = dic.get(str(f))
-                            OM[int(j)][i] = 1
-                OMs.append(OM)   
         
+        z = None
         if len(self.chain)==2:
             z = np.zeros([m,1])
             for j,k in enumerate(dic): # Add z parameter as a feature
                 if '_Em' in k:
                     z[j][0]=1
+        return(OMs,z)
+    
+    def get_occurrence_matrix_test(self,OMs_train,n_patients,matrix_index):
+        
+        OMs = []
+        for i,c in enumerate(self.chain):
+            m = int(n_patients) 
+            n = int(len(OMs_train[i][0]))
+            OM = np.zeros([m,n])
+            matrix_index_c = matrix_index[matrix_index['chain']==c]
+            for k in list(matrix_index_c.index):
+                OM[0][k]=1
+            OMs.append(OM)
+        z = np.zeros([m,1])
         return(OMs,z)
     
     def get_matches_x(self,M,z=None):

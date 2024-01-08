@@ -17,6 +17,7 @@ HLAGuessr.egg-info/requires.txt
 HLAGuessr.egg-info/top_level.txt
 HLAGuessr/Example_validation_data/alpha_example.tsv
 HLAGuessr/Example_validation_data/beta_example.tsv
+HLAGuessr/Training_data/HLA_frequency_for_validation.tsv
 HLAGuessr/Training_data/HLA_grouped_patients.tsv
 HLAGuessr/Training_data/alpha_cdr3aa_shared_at_least_3.txt
 HLAGuessr/Training_data/beta_cdr3aa_shared_at_least_3.txt
