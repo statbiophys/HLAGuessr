@@ -124,7 +124,7 @@ def main():
         
         for p in patients:
             
-            print('Individual ' +p+ ':')
+            print('** Individual ' +p+ ': **')
 
             for hla_target in hla_set:
                 

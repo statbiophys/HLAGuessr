@@ -32,20 +32,18 @@ class Processing(object):
         
     def load_test_data(self,alpha_files,beta_files,sep):
 
-        alpha = pd.DataFrame()
-        beta = pd.DataFrame()
+        df_alpha = pd.DataFrame()
+        df_beta = pd.DataFrame()
 
         if alpha_files is not None:
-            alpha = pd.read_csv(alpha_files,delimiter=sep)
-            format_alpha = self.format_dataframe(alpha)
-            format_alpha['chain'] = 'alpha'
+            df_alpha = self.format_dataframe(pd.read_csv(alpha_files,delimiter=sep))
+            df_alpha['chain'] = 'alpha'
             
         if beta_files is not None:
-            beta = pd.read_csv(beta_files,delimiter='\t')
-            format_beta = self.format_dataframe(beta)
-            format_beta['chain'] = 'beta'
+            df_beta = self.format_dataframe(pd.read_csv(beta_files,delimiter='\t'))
+            df_beta['chain'] = 'beta'
 
-        big_df = pd.concat([format_alpha,format_beta], ignore_index=True)
+        big_df = pd.concat([df_alpha,df_beta], ignore_index=True)
         big_df.set_index('cdr3+v_family',inplace=True)
         return(big_df)
     

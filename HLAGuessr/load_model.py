@@ -108,6 +108,19 @@ class PreprocessedModel():
                             j = dic.get(str(y))
                             OM[int(j)][i] = 1
                 OMs.append(OM)
+                
+            if grouped==False:
+                files = df1.groupby('cdr3+v_family')['Patient'].apply(list)
+                df1.drop_duplicates('cdr3+v_family',keep='first',inplace=True)
+                df1.sort_values('cdr3+v_family',inplace=True)
+                m = int(n_patients) 
+                n = int(len(df1))
+                OM = np.zeros([m,n])
+                for i,file in enumerate(files):
+                    for f in file:
+                        j = dic.get(str(f))
+                        OM[int(j)][i] = 1
+                OMs.append(OM)  
         
         z = None
         if len(self.chain)==2:
