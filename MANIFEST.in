@@ -1,2 +1,18 @@
-recursive-include HLAGuessr/Training_data/ *
-recursive-include HLAGuessr/Example_validation_data/ *
+# MANIFEST.in
+# Control the files included or not in the source distribution
+# For further information, see
+# https://packaging.python.org/guides/using-manifest-in/
+
+# Mandatory files
+include LICENSE
+include Example.ipynb
+exclude Check_sparsity.ipynb 
+exclude Get_data_for_figures.ipynb 
+exclude .gitignore
+
+
+# Source code, including test and example files
+recursive-include HLAGuessr/Example_validation_data *
+recursive-include HLAGuessr/Training_data *
+prune dist
+prune build

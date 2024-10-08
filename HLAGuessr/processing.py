@@ -15,39 +15,60 @@ translate_header = {
     'aa':'cdr3aa',
     'bestVGene':'v_gene',
     'v':'v_gene',
-    'v_family':'v_gene'}
+    'v_family':'v_gene',
+    'v_call':'v_gene'}
 
 class Processing(object):
     
-    def __init__(self,chain,alpha_input=None,beta_input=None,delimiter='\t'):
+    def __init__(self,chain,alpha_input=None,beta_input=None,delimiter=None,grouping=False):
 
-        #self.read_thresh=read_thresh
-        #self.max_length=max_length
-        self.alpha_input = alpha_input
-        self.beta_input = beta_input
-        self.delimiter = delimiter
+        # self.read_thresh=read_thresh
+        # self.max_length=max_length
         self.chain=chain
-        self.delimiter = delimiter
-        self.data_test = self.load_test_data(self.alpha_input,self.beta_input,self.delimiter)
+        if delimiter is None:
+            self.delimiter = '\t' 
+        else:
+            self.delimiter = delimiter
+        self.grouping = grouping
+        if alpha_input is not None or beta_input is not None:
+            self.data_test, self.ps = self.load_test_data(alpha_input,beta_input,self.delimiter,self.grouping)
         
-    def load_test_data(self,alpha_files,beta_files,sep):
+    def load_test_data(self,alpha_files,beta_files,sep,grouping):
 
-        df_alpha = pd.DataFrame()
-        df_beta = pd.DataFrame()
+        df_alpha, df_beta = pd.DataFrame(), pd.DataFrame()
+        p_alpha, p_beta = [],[] 
 
         if alpha_files is not None:
-            df_alpha = self.format_dataframe(pd.read_csv(alpha_files,delimiter=sep))
+            df_alpha, p_alpha = self.format_dataframe(pd.read_csv(alpha_files,delimiter=sep),grouping)
             df_alpha['chain'] = 'alpha'
             
         if beta_files is not None:
-            df_beta = self.format_dataframe(pd.read_csv(beta_files,delimiter='\t'))
+            df_beta, p_beta = self.format_dataframe(pd.read_csv(beta_files,delimiter=sep),grouping)
             df_beta['chain'] = 'beta'
 
         big_df = pd.concat([df_alpha,df_beta], ignore_index=True)
-        big_df.set_index('cdr3+v_family',inplace=True)
-        return(big_df)
+        if len(big_df)>0:
+            big_df.set_index('cdr3+v_family',inplace=True)
+        return(big_df, [p_alpha,p_beta])
     
-    def format_dataframe(self,df):
+    def group_patients(self,df):
+        groups = df.groupby('cdr3+v_family')['Patient'].apply(list)
+        new_df = pd.DataFrame(groups)
+        new_df.reset_index(inplace=True)
+        return(new_df)
+    
+    def test_patients_database(self, ps):
+        if len(ps[0])==len(ps[1]):
+            n_patients = len(ps[0])
+            p = ps[0]
+        else:
+            idx = np.argmax(np.array([len(ps[0]),len(ps[1])]))
+            p = ps[idx]
+            n_patients = len(p)
+        dic = {p[i]: list(np.arange(n_patients))[i] for i in range(len(p))}
+        return(dic,n_patients)
+    
+    def format_dataframe(self,df,grouping=False):
         '''
         Implement filtering pipeline
         '''
@@ -57,17 +78,22 @@ class Processing(object):
         df['v_gene'] = new_v_gene
         
         prod_df = self.select_productive(df)
-        #self.select_cdr3_length()
+        # self.select_cdr3_length()
         prod_df['cdr3+v_family'] = prod_df['cdr3aa']+'+'+prod_df['v_gene']
         prod_df = prod_df.loc[:,['cdr3+v_family','Patient']]
-
-        return(prod_df)
+        p = list(set(df['Patient']))
+        
+        if grouping is True:
+            grouped_df = self.group_patients(prod_df)
+            return(grouped_df,p)
+        else:
+            return(prod_df,p)
             
     def format_genes(self,df):   
         '''
         Considers only v gene family
         '''
-        new_vs=df.v_gene.apply(lambda x: x.split('*')[0]).values
+        new_vs = ((df.v_gene.apply(lambda x: x.split('*')[0])).apply(lambda x: x.split('/')[0])).apply(lambda x: x.split('-')[0]).values
         return(list(new_vs))
         
     def select_productive(self,df):
@@ -92,5 +118,6 @@ class Processing(object):
         select cdr3 length smaller than max_length
         '''
         self.df['selection_length']=self.df.amino_acid.fillna('nan').apply(len)<self.max_length
-        print ('long cdr3s:',np.sum(np.logical_not(self.df['selection_length'].values[self.df['selection'].values])))
+        print('long cdr3s:',np.sum(np.logical_not(self.df['selection_length'].values[self.df['selection'].values])))
         self.df['selection']=np.logical_and(self.df['selection'].values,self.df['selection_length'].values)
+        

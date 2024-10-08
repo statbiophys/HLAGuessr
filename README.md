@@ -83,7 +83,7 @@ If a file is specified to write to (using -o, see Options), the generated predic
 ## Quick Demo
 After installing HLAGuessr, we offer a quick demonstration of the console scripts using two example files that can be found in Example_validation_data folder, alpha_example and beta_example. 
 ```
-1. HLAGuessr-infer_hla -a ~/HLAGuessr/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/HLAGuessr/HLAGuessr/Example_validation_data/beta_example.tsv --hla "A*02:01" -d tab
+1. HLAGuessr-infer_hla -a Example_validation_data/alpha_example.tsv -b Example_validation_data/beta_example.tsv --hla "A*02:01" -d tab
 
 100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 1842.48it/s]
 100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 2011.12it/s]
@@ -96,12 +96,12 @@ After installing HLAGuessr, we offer a quick demonstration of the console script
 8it [00:00, 330.90it/s]
 A*02:01  -> Probability: 1.0	 AUC: 0.9879227053140096	 Accuracy: 0.7073170731707317	 Precision: 0.6	 Sensitivity: 1.0	 Specificity: 0.4782608695652174
 
-2. HLAGuessr-infer_hla -a ~/HLAGuessr/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/HLAGuessr/HLAGuessr/Example_validation_data/beta_example.tsv --hla "B*02:01" -d tab
+2. HLAGuessr-infer_hla -a Example_validation_data/alpha_example.tsv -b Example_validation_data/beta_example.tsv --hla "B*02:01" -d tab
 No available information for HLA B*02:01
 No available information for the HLA alleles provided
 Exiting...
 
-3. HLAGuessr-infer_hla -a ~/Scripts/HLA_Guessr_package/HLAGuessr/Example_validation_data/alpha_example.tsv -b ~/Scripts/HLA_Guessr_package/HLAGuessr/Example_validation_data/beta_example.tsv --hla "A*02:01,B*07:02" -d tab
+3. HLAGuessr-infer_hla -a Example_validation_data/alpha_example.tsv -b Example_validation_data/beta_example.tsv --hla "A*02:01,B*07:02" -d tab
 Individual 17_B:
 100%|███████████████████████████████████████████| 9/9 [00:00<00:00, 2141.29it/s]
 100%|███████████████████████████████████████████| 8/8 [00:00<00:00, 2096.76it/s]
