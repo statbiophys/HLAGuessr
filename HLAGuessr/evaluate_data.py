@@ -71,11 +71,12 @@ class GetProbabilities(object):
         return(prob_lr[0][1],predictions_lr)
 
     def classifier_params(self,df_param,hla_target):
-        df1 = df_param[df_param['HLA']==hla_target]
-        auc = float(df1['AUC'])
-        a = float(df1['accuracy'])
-        p = float(df1['precision'])
-        s1 = float(df1['sensitivity'])
-        s2 = float(df1['specificity'])
+        
+        df1 = df_param.loc[df_param['HLA']==hla_target,:]
+        auc = float(df1['AUC'].iloc[0])
+        a = float(df1['accuracy'].iloc[0])
+        p = float(df1['precision'].iloc[0])
+        s1 = float(df1['sensitivity'].iloc[0])
+        s2 = float(df1['specificity'].iloc[0])
         return([auc,a,p,s1,s2])
     
