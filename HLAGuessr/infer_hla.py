@@ -89,7 +89,10 @@ def main():
     
     process = Processing(chain,options.alpha_infile,options.beta_infile,delimiter)    
     main_path = os.getcwd()
-    f_params = main_path + 'Training_data/classifier_params_alpha+beta.tsv'
+    hla_threshold=1
+    grouping = False
+    untyped = True
+    f_params = main_path + '/Training_data/classifier_params_alpha+beta.tsv'
     df_param = pd.read_csv(f_params,delimiter='\t')
     
     hla_set = []
@@ -116,13 +119,18 @@ def main():
          
     else:
         
-        for p in np.unique(np.array(process.ps), axis=0):
+        non_empty = [p for p in process.ps if p]
+        unique_ps = list({tuple(p) for p in non_empty})
+        unique_ps = [list(p) for p in unique_ps]
+
+        for p in unique_ps:
             
             print('** Individual ' +p[0]+ ': **')
 
             for hla_target in hla_set:
                 
-                ev = GetProbabilities(hla_target,chain,hla_threshold,process.ps,process.data_test)
+                ev = GetProbabilities(hla_target,chain,hla_threshold,
+                                      process.ps,process.data_test,grouping,untyped)
                 params = ev.classifier_params(df_param,hla_target)
                 
                 df = mt.print_params(hla_target,ev.hla_prob,params,p[0],ev.hla_output)
