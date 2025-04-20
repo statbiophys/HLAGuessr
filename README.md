@@ -9,7 +9,7 @@ Latest released version: 0.1.13
 HLAGuessr is available on PyPI and can be downloaded and installed through pip:
 
 
- ```pip install HLAGuessr```
+ ```pip install hlaguessr```
 
 HLAGuessr is also available on [GitHub](https://github.com/statbiophys/HLAGuessr). The command line entry points can be installed by using the setup.py script:
 
